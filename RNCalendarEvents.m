@@ -817,6 +817,15 @@ RCT_EXPORT_METHOD(fetchAllEvents:(NSDate *)startDate endDate:(NSDate *)endDate c
         }
     }
 
+    // Bharat: crash fix due to nill date passed
+    if (startDate == nil) {
+        startDate = [NSDate dateWithTimeIntervalSinceNow:-12*30*24*60*60];
+    }
+    if (endDate == nil) {
+        endDate = [NSDate dateWithTimeIntervalSinceNow:12*30*24*60*60];
+    }
+    NSLog(@"fetchAllEvents: startdate[%@], endDate[%@], calendars[%@]",startDate, endDate, calendars);
+
     NSPredicate *predicate = [self.eventStore predicateForEventsWithStartDate:startDate
                                                                       endDate:endDate
                                                                     calendars:eventCalendars];
